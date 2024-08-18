@@ -1,13 +1,23 @@
+import { ReactNode } from "react";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import Hero from "../components/Hero";
 
-import React from "react"
-import Header from "../components/Header"
-interface LayoutProps{
-    children:React.ReactNode
+interface LayoutProps {
+  children: ReactNode;
 }
-const Layout = ({children}:LayoutProps) => {
+
+const Layout = ({ children }: LayoutProps) => {
   return (
-<Header/>
-  )
-}
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <Hero/>
+      <main className="flex-grow">
+        {children}
+      </main>
+      <Footer />
+    </div>
+  );
+};
 
-export default Layout
+export default Layout;

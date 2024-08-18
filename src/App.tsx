@@ -1,14 +1,21 @@
 import { useState } from 'react'
-import Layout from "./Layout/Layout"
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import Layout from './Layout/Layout';
+
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-  <Layout>
-    <p>Moiz</p>
-  </Layout>
-    </>
+ <Router>
+  <Routes>
+    <Route path="/" element={<Layout><p>Moiz is a Good Boy</p></Layout>} />
+  </Routes>
+ </Router>
   )
 }
 
