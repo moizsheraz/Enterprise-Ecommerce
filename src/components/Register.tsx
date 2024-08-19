@@ -1,6 +1,8 @@
 import Logo from "../assets/logos/image.png"
 import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
+import { useMutation } from "react-query"
+import * as apiClient from "../api-client" // import all function
 export type RegisterFormData={
     firstName: string,
     lastName: string,
@@ -11,8 +13,16 @@ export type RegisterFormData={
 
 const Register = () => {
     const {register,watch,handleSubmit,formState:{errors}} = useForm<RegisterFormData>();
+    const mutation = useMutation(apiClient.register,{
+      onSuccess:()=>{
+        console.log("Registration successful")
+      },
+      onError:(error:Error)=>{
+        console.log("Registration failed",error)
+      }
+    });
   const onSubmit=handleSubmit((data)=>{
-    console.log(data)
+    mutation.mutate(data); // it will call our api client and pass our data
   })
   return (
     <div className="max-w-4xl mx-auto font-[sans-serif] p-6">
