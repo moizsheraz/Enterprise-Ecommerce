@@ -3,8 +3,9 @@ import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { useMutation } from "react-query"
 import * as apiClient from "../api-client" // import all function
-import { SnackbarProvider } from 'notistack'
+
 import { useAppContext } from "../contexts/AppContext"
+import { useNavigate } from "react-router-dom"
 export type RegisterFormData={
     firstName: string,
     lastName: string,
@@ -14,11 +15,13 @@ export type RegisterFormData={
 }
 
 const Register = () => {
+  const navigate = useNavigate();
     const {register,watch,handleSubmit,formState:{errors}} = useForm<RegisterFormData>();
     const {showToast} = useAppContext();
     const mutation = useMutation(apiClient.register,{
       onSuccess:()=>{
-        showToast({message: "Registration successful", type: "success"})
+        showToast({message: "Registration successful", type: "success"});
+        navigate("/");
       },
       onError:(error:Error)=>{
         showToast({message:error.message, type: "error"})
@@ -97,7 +100,6 @@ const Register = () => {
         </button>
       </div>
     </form>
-    <SnackbarProvider autoHideDuration={5000} />
   </div>
   )
 }
