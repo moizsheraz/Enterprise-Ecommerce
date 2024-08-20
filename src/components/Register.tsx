@@ -3,6 +3,8 @@ import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { useMutation } from "react-query"
 import * as apiClient from "../api-client" // import all function
+import { SnackbarProvider } from 'notistack'
+import { useAppContext } from "../contexts/AppContext"
 export type RegisterFormData={
     firstName: string,
     lastName: string,
@@ -13,16 +15,17 @@ export type RegisterFormData={
 
 const Register = () => {
     const {register,watch,handleSubmit,formState:{errors}} = useForm<RegisterFormData>();
+    const {showToast} = useAppContext();
     const mutation = useMutation(apiClient.register,{
       onSuccess:()=>{
-        console.log("Registration successful")
+        showToast({message: "Registration successful", type: "success"})
       },
       onError:(error:Error)=>{
-        console.log("Registration failed",error)
+        showToast({message:error.message, type: "error"})
       }
     });
   const onSubmit=handleSubmit((data)=>{
-    mutation.mutate(data); // it will call our api client and pass our data
+    mutation.mutate(data); 
   })
   return (
     <div className="max-w-4xl mx-auto font-[sans-serif] p-6">
@@ -83,7 +86,7 @@ const Register = () => {
       
         <p className="mt-10 text-center text-sm text-gray-500">
         Already having a account ? {' '}
-        <Link to="/register" className="font-semibold leading-6 text-primary hover:text-primary">
+        <Link to="/login" className="font-semibold leading-6 text-primary hover:text-primary">
           Login here
         </Link>
       </p>
@@ -94,6 +97,7 @@ const Register = () => {
         </button>
       </div>
     </form>
+    <SnackbarProvider autoHideDuration={5000} />
   </div>
   )
 }
