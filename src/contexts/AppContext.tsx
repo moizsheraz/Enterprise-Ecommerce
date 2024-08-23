@@ -1,13 +1,14 @@
 import React, { useContext} from "react";
 import { enqueueSnackbar } from 'notistack';
-
-
+import { useQuery } from "react-query";
+import { validateToken } from "../api-client";
 type ToastMessage = {
   message: string;
   type: "default" | "error" | "success" | "warning" | "info";
 };
 type AppContext = {
   showToast: (toastMessage: ToastMessage) => void;
+  isLoggedIn: boolean;
 };
 
 const AppContext = React.createContext<AppContext | undefined>(undefined);
@@ -19,6 +20,16 @@ export const AppContextProvider = ({
   children: React.ReactNode;
 }) => {
 
+  const { isError } = useQuery("validateToken",validateToken, {
+    retry: false,
+  }); //
+
+  // // it is just like 
+
+  // {
+  //   "validateToken":"result"
+  //   key : "value"
+  // }
 
   return (
     <AppContext.Provider
@@ -34,6 +45,7 @@ export const AppContextProvider = ({
             },
           });
         },
+        isLoggedIn:!isError, 
       }}
     >
   
