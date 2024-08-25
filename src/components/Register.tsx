@@ -17,23 +17,21 @@ export type RegisterFormData={
 const Register = () => {
   const navigate = useNavigate();
     const {register,watch,handleSubmit,formState:{errors}} = useForm<RegisterFormData>();
-    const {showToast} = useAppContext();
-    const mutation = useMutation(apiClient.register,{
+    const {showToast,setLoggedIn} = useAppContext();
+    const mutation = useMutation(apiClient.register, {
       onSuccess: () => {
         showToast({ message: "Registration successful", type: "success" });
+        setLoggedIn(true);
         navigate("/");
-        setTimeout(() => {
-            window.location.reload();
-        }, 2000); 
-    },
-    
-      onError:(error:Error)=>{
-        showToast({message:error.message, type: "error"})
-      }
+      },
+      onError: (error: Error) => {
+        showToast({ message: error.message, type: "error" });
+      },
     });
-  const onSubmit=handleSubmit((data)=>{
-    mutation.mutate(data); 
-  })
+  
+    const onSubmit = handleSubmit((data) => {
+      mutation.mutate(data);
+    });
   return (
     <div className="max-w-4xl mx-auto font-[sans-serif] p-6">
     <div className="text-center mb-16">
