@@ -69,8 +69,7 @@ const Header = () => {
               to="/register"
               className="bg-white text-[#eab308] flex justify-center items-center px-3 py-1.5 md:px-4 md:py-2 rounded-lg font-semibold text-sm md:text-base hover:bg-gray-200"
             >
-              Try for Free{" "}
-              <ArrowBigRightDash className="w-6 h-6 md:w-8 md:h-8 ml-1" />
+              Try for Free
             </Link>
           </>
         ) : (

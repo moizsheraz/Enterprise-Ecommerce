@@ -13,7 +13,6 @@ type AppContext = {
 
 const AppContext = React.createContext<AppContext | undefined>(undefined);
 
-
 export const AppContextProvider = ({
   children,
 }: {

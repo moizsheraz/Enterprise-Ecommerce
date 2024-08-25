@@ -19,10 +19,14 @@ const Register = () => {
     const {register,watch,handleSubmit,formState:{errors}} = useForm<RegisterFormData>();
     const {showToast} = useAppContext();
     const mutation = useMutation(apiClient.register,{
-      onSuccess:()=>{
-        showToast({message: "Registration successful", type: "success"});
+      onSuccess: () => {
+        showToast({ message: "Registration successful", type: "success" });
         navigate("/");
-      },
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000); 
+    },
+    
       onError:(error:Error)=>{
         showToast({message:error.message, type: "error"})
       }
